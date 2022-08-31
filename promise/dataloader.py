@@ -270,10 +270,10 @@ def dispatch_queue_batch(loader, queue):
             queue,
             TypeError(
                 (
-                    "DataLoader must be constructed with a function which accepts "
+                    "DataLoader {} must be constructed with a function which accepts "
                     "Array<key> and returns Promise<Array<value>>, but the function did "
                     "not return a Promise: {}."
-                ).format(batch_promise)
+                ).format(type(loader).__name__, batch_promise)
             ),
         )
         return None
@@ -284,22 +284,22 @@ def dispatch_queue_batch(loader, queue):
         if not isinstance(values, Iterable):
             raise TypeError(
                 (
-                    "DataLoader must be constructed with a function which accepts "
+                    "DataLoader {} must be constructed with a function which accepts "
                     "Array<key> and returns Promise<Array<value>>, but the function did "
                     "not return a Promise of an Array: {}."
-                ).format(values)
+                ).format(type(loader).__name__, values)
             )
 
         if len(values) != len(keys):
             raise TypeError(
                 (
-                    "DataLoader must be constructed with a function which accepts "
+                    "DataLoader {} must be constructed with a function which accepts "
                     "Array<key> and returns Promise<Array<value>>, but the function did "
                     "not return a Promise of an Array of the same length as the Array "
                     "of keys."
                     "\n\nKeys:\n{}"
                     "\n\nValues:\n{}"
-                ).format(keys, values)
+                ).format(type(loader).__name__, keys, values)
             )
 
         # Step through the values, resolving or rejecting each Promise in the
